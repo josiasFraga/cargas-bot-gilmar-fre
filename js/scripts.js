@@ -45,7 +45,7 @@ $('#exampleModal').on('shown.bs.modal', function (evt) {
 });
 
 $('#modal_fila').on('shown.bs.modal', function (evt) {
-    $('#modal_fila').find('tbody').html('<tr><td colspan="3"><div class="text-center"><div class="spinner-grow" role="status"><span class="sr-only"></span></div></div></td></tr>');
+    $('#modal_fila').find('tbody').html('<tr><td colspan="6"><div class="text-center"><div class="spinner-grow" role="status"><span class="sr-only"></span></div></div></td></tr>');
     const button = evt.relatedTarget;
     const json_fila = $(button).data('json-fila');
     //const fila_ordenada = ordena_fila(json_fila.fila.completa);
@@ -62,7 +62,7 @@ $('#modal_fila').on('shown.bs.modal', function (evt) {
         $td.html((index+1));
         $tr.append($td);
 
-        $td  = $('<td></td>');
+        $td = $('<td></td>');
         $td.addClass('text-center');
         $td.html(fila.frota);
         $tr.append($td);
@@ -70,14 +70,83 @@ $('#modal_fila').on('shown.bs.modal', function (evt) {
         $td  = $('<td></td>');
         $td.addClass('text-center');
         if ( fila.viagem && fila.viagem.ultimaCidade ) {
-            $td.html(fila.viagem.ultimaCidade + '[' + fila.viagem.viagem_id + ']');
+            $btn_viagem = $('<button class="btn btn-link" data-bs-toggle="modal" data-bs-target="#modal_carga" data-carga=' + "'" + JSON.stringify(fila.viagem.cargas) + "'" + '></button>');
+            $btn_viagem.html(fila.viagem.ultimaCidade + '[' + fila.viagem.viagem_id + ']');
+            $td.append($btn_viagem);
         } else {
             $td.html(fila.motivo);
         }
         $tr.append($td);
 
+        $td = $('<td></td>');
+        $td.addClass('text-center');
+        if (fila.viagem && fila.viagem.entregas)
+            $td.html(fila.viagem.entregas);
+        $tr.append($td);
+
+
+        $td = $('<td></td>');
+        $td.addClass('text-center');
+        if (fila.viagem && fila.viagem.entregas)
+            $td.html((fila.viagem.valor).toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}));
+        $tr.append($td);
+
+        $td = $('<td></td>');
+        $td.addClass('text-center');
+        if (fila.viagem && fila.viagem.entregas)
+            $td.html(fila.viagem.veiculos);
+        $tr.append($td);
+    
+
 
         $('#modal_fila').find('tbody').append($tr);
+    })
+    
+
+
+});
+
+$('#modal_carga').on('shown.bs.modal', function (evt) {
+    $('#modal_carga').find('tbody').html('<tr><td colspan="6"><div class="text-center"><div class="spinner-grow" role="status"><span class="sr-only"></span></div></div></td></tr>');
+    const button = evt.relatedTarget;
+    const json_carga = $(button).data('carga');
+
+    $('#modal_carga').find('tbody').html('');
+    $.each(json_carga,(index, carga) => {
+
+        $tr  = $('<tr></tr>');
+
+        $td  = $('<td></td>');
+        //$td.addClass('text-center');
+        $td.html(carga.modelo);
+        $tr.append($td);
+
+        $td = $('<td></td>');
+        //$td.addClass('text-center');
+        $td.html(carga.cor);
+        $tr.append($td);
+
+        $td  = $('<td></td>');
+        //$td.addClass('text-center');
+        $td.html(carga.dealer);
+        $tr.append($td);
+
+        $td  = $('<td></td>');
+        //$td.addClass('text-center');
+        $td.html(carga.km);
+        $tr.append($td);
+
+        $td  = $('<td></td>');
+        //$td.addClass('text-center');
+        $td.html(carga.destino);
+        $tr.append($td);
+
+        $td  = $('<td></td>');
+        //$td.addClass('text-center');
+        $td.html((carga.valor).toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}));
+        $tr.append($td);
+
+        $('#modal_carga').find('tbody').append($tr);
     })
     
 
