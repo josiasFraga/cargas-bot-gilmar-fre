@@ -10,9 +10,15 @@ $(document).ready(function(){
 })
 
 $('#exampleModal').on('shown.bs.modal', function (evt) {
-    $('#exampleModal').find('.modal-body').html('<div class="text-center"><div class="spinner-grow" role="status"><span class="sr-only"></span></div></div>');
+
     const button = evt.relatedTarget;
     let data_selecionada = $(button).data('data');
+
+    if ( !data_selecionada ) {
+        return true;
+    }
+
+    $('#exampleModal').find('.modal-body').html('<div class="text-center"><div class="spinner-grow" role="status"><span class="sr-only"></span></div></div>');
     let data_abrev_selecionada = $(button).data('data-abrev');
     //console.log(data_selecionada);
     $('#exampleModal').find('.modal-title').html(data_abrev_selecionada);
@@ -34,7 +40,7 @@ $('#exampleModal').on('shown.bs.modal', function (evt) {
             '</div>');
             
             $chamada_container.append('<div class="row">'+
-            '<div class="col-12 text-end mt-2"><button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#modal_fila" data-json-fila=' + "'" + JSON.stringify(json_fila) + "'" + '>Ver Fila</button></div>'+
+            '<div class="col-12 text-end mt-2"><button type="button" class="btn btn-light mr-4" data-bs-toggle="modal" data-bs-target="#modal_fila_completa" data-json-fila=' + "'" + JSON.stringify(json_fila) + "'" + '>Ver Fila Completa</button><button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#modal_fila" data-json-fila=' + "'" + JSON.stringify(json_fila) + "'" + '>Ver Fila</button></div>'+
             '</div>');
 
             $content_modal_body.append($chamada_container);
@@ -45,9 +51,14 @@ $('#exampleModal').on('shown.bs.modal', function (evt) {
 });
 
 $('#modal_fila').on('shown.bs.modal', function (evt) {
-    $('#modal_fila').find('tbody').html('<tr><td colspan="6"><div class="text-center"><div class="spinner-grow" role="status"><span class="sr-only"></span></div></div></td></tr>');
     const button = evt.relatedTarget;
     const json_fila = $(button).data('json-fila');
+
+    if ( !json_fila ) {
+        return true;
+    }
+
+    $('#modal_fila').find('tbody').html('<tr><td colspan="6"><div class="text-center"><div class="spinner-grow" role="status"><span class="sr-only"></span></div></div></td></tr>');
     //const fila_ordenada = ordena_fila(json_fila.fila.completa);
     const fila_ordenada_com_viagem = search_viagem(json_fila.fila.participantes, json_fila.viagens);
     console.log(fila_ordenada_com_viagem);
@@ -100,6 +111,54 @@ $('#modal_fila').on('shown.bs.modal', function (evt) {
 
 
         $('#modal_fila').find('tbody').append($tr);
+    })
+    
+
+
+});
+
+$('#modal_fila_completa').on('shown.bs.modal', function (evt) {
+    const button = evt.relatedTarget;
+    const json_fila = $(button).data('json-fila');
+
+    if ( !json_fila ) {
+        return true;
+    }
+
+    $('#modal_fila_completa').find('tbody').html('<tr><td colspan="6"><div class="text-center"><div class="spinner-grow" role="status"><span class="sr-only"></span></div></div></td></tr>');
+    const fila_ordenada = ordena_fila(json_fila.fila.completa);
+    //const fila_ordenada_com_viagem = search_viagem2(fila_ordenada, json_fila.viagens);
+  
+
+    $('#modal_fila_completa').find('tbody').html('');
+    $.each(fila_ordenada,(index, fila) => {
+
+        $tr  = $('<tr></tr>');
+
+        $td  = $('<td></td>');
+        $td.addClass('text-center');
+        $td.html((index+1));
+        $tr.append($td);
+
+        $td = $('<td></td>');
+        $td.addClass('text-center');
+        $td.html(fila.frota);
+        $tr.append($td);
+
+        $td  = $('<td></td>');
+        $td.addClass('text-center');
+        if (fila.ultimoCarregamento)
+            $td.html(fila.ultimoCarregamento);
+        $tr.append($td);
+
+        $td = $('<td></td>');
+        $td.addClass('text-center');
+        if (fila.filial)
+            $td.html(fila.filial);
+        $tr.append($td);
+
+
+        $('#modal_fila_completa').find('tbody').append($tr);
     })
     
 
@@ -179,6 +238,7 @@ function ordena_fila(fila) {
     $.each(arr_keys_ordem,(index, item)=>{
         fila_ordenada_arr[index] = (Object.assign(fila[item], {frota: item}));
     });
+
     return fila_ordenada_arr;
 }
 
@@ -186,6 +246,8 @@ function search_viagem(participantes, viagens) {
     let fila_ordenada_retornar = [];
     //$.each(fila_ordenada, (index,el) => {
      //   let participante = {}
+
+     console.log(participantes);
 
         $.each(participantes, (index_part,part) => {
             //if ( part.frota == el.frota ) {

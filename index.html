@@ -119,13 +119,55 @@
             </div>
           </div>
           <div class="modal-footer">
+            <button type="button" class="btn btn-terciary" data-bs-target="#exampleModal" data-bs-toggle="modal" id="modal-fila-voltar">Voltar</button>
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Modal Fila -->
+    <!-- Modal Fila Completa-->
+    <div class="modal fade" id="modal_fila_completa" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Fila Completa</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th class="text-center">
+                    Posição
+                  </th>
+                  <th class="text-center">
+                    Frota
+                  </th>
+                  <th class="text-center">
+                    Último Carregamento
+                  </th>
+                  <th class="text-center">
+                    Filial
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                
+              </tbody>
+            </table>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-terciary" data-bs-target="#exampleModal" data-bs-toggle="modal" id="modal-fila-voltar">Voltar</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal carga -->
     <div class="modal fade" id="modal_carga" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -165,6 +207,7 @@
             </div>
           </div>
           <div class="modal-footer">
+            <button type="button" class="btn btn-terciary" data-bs-target="#modal_fila" data-bs-toggle="modal" data-bs-dismiss="modal" id="modal-carga-voltar">Voltar</button>
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
           </div>
         </div>
