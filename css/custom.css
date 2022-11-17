@@ -1,1 +1,5 @@
 .chamada_container{ background-color: #f7f7f7; padding: 10px; border-radius: 5px; margin-bottom: 10px;} 
+.fc-daygrid-day{ cursor: pointer;}
+
+.fc .fc-daygrid-day-number{ color: #555 !important; text-decoration: none !important;}
+.fc-col-header-cell-cushion { text-decoration: none !important; font-weight: bold; text-transform: capitalize; color: #000;}

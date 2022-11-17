@@ -1,12 +1,12 @@
 $(document).ready(function(){
-    $('#datas-container').html('<div class="text-center"><div class="spinner-grow" role="status"><span class="sr-only"></span></div></div>');
+    /*$('#datas-container').html('<div class="text-center"><div class="spinner-grow" role="status"><span class="sr-only"></span></div></div>');
     $.get(window.apiUrl + 'dados/datas',{},(response) => {
         $('#datas-container').html('');
         $.each(response.dados,(index, dado)=>{
             $button = '<button class="btn btn-secondary mb-2" type="button" style="margin-right: 10px" data-bs-toggle="modal" data-bs-target="#exampleModal" data-data="' + dado.Dado.data + '" data-data-abrev="' + dado.Dado.data_str_abrev + '">' + dado.Dado.data_str_abrev + '</button>';
             $('#datas-container').append($button);
         })
-    });
+    });*/
 })
 
 $('#exampleModal').on('shown.bs.modal', function (evt) {
