@@ -127,11 +127,21 @@ $('#modal_fila_completa').on('shown.bs.modal', function (evt) {
 
     $('#modal_fila_completa').find('tbody').html('<tr><td colspan="6"><div class="text-center"><div class="spinner-grow" role="status"><span class="sr-only"></span></div></div></td></tr>');
     const fila_ordenada = ordena_fila(json_fila.fila.completa);
-    //const fila_ordenada_com_viagem = search_viagem2(fila_ordenada, json_fila.viagens);
+    const fila_ordenada_com_viagem = search_viagem(json_fila.fila.participantes, json_fila.viagens);
+
+    console.log(fila_ordenada_com_viagem)
   
 
     $('#modal_fila_completa').find('tbody').html('');
     $.each(fila_ordenada,(index, fila) => {
+
+        $.each(fila_ordenada_com_viagem,(index_2,fila_c_viagem) => {
+            if ( fila_c_viagem.frota == fila.frota ){
+                fila.viagem = fila_c_viagem.viagem;
+                fila.motivo = fila_c_viagem.motivo;
+            }
+
+        })
 
         $tr  = $('<tr></tr>');
 
@@ -147,14 +157,13 @@ $('#modal_fila_completa').on('shown.bs.modal', function (evt) {
 
         $td  = $('<td></td>');
         $td.addClass('text-center');
-        if (fila.ultimoCarregamento)
-            $td.html(fila.ultimoCarregamento);
-        $tr.append($td);
-
-        $td = $('<td></td>');
-        $td.addClass('text-center');
-        if (fila.filial)
-            $td.html(fila.filial);
+        if ( fila.viagem && fila.viagem.ultimaCidade ) {
+            $btn_viagem = $('<button class="btn btn-link" data-bs-toggle="modal" data-bs-target="#modal_carga" data-carga=' + "'" + JSON.stringify(fila.viagem.cargas) + "'" + '></button>');
+            $btn_viagem.html(fila.viagem.ultimaCidade + '[' + fila.viagem.viagem_id + ']');
+            $td.append($btn_viagem);
+        } else {
+            $td.html(fila.motivo);
+        }
         $tr.append($td);
 
 
@@ -246,8 +255,6 @@ function search_viagem(participantes, viagens) {
     let fila_ordenada_retornar = [];
     //$.each(fila_ordenada, (index,el) => {
      //   let participante = {}
-
-     console.log(participantes);
 
         $.each(participantes, (index_part,part) => {
             //if ( part.frota == el.frota ) {
